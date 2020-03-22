@@ -3,6 +3,7 @@ import argparse
 import penut.io as pio
 import xml.etree.cElementTree as ET
 
+from penut.utils import TimeCost
 from wiki import remove_wikitext
 
 def main():
@@ -33,9 +34,11 @@ def xml_to_json(inn_dir, out1, out2):
 
 def walk_dir(inn):
     for dir_path, _, file_list in os.walk(inn):
-        for file_name in file_list:
+        for file_name in sorted(file_list):
             full_path = os.path.join(dir_path, file_name)
             yield full_path
 
 if __name__ == "__main__":
-    main()
+    with TimeCost('Convert XML to JSON'):
+        main()
+
