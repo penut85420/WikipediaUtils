@@ -10,14 +10,14 @@ def main():
     parser.add_argument('-o', '--output', required=True)
     args = parser.parse_args()
 
-    split(args.inn, args.out)
+    split(args.input, args.output)
 
 def split(inn, out):
     record = False
     max_size = 4 * 1024 * 1024
     os.makedirs(out, exist_ok=True)
 
-    fout = newfile()
+    fout = newfile(out)
 
     print(f' {fid:04d}', end='\r')
     with open(inn, 'r', encoding='UTF-8') as f:
@@ -30,12 +30,12 @@ def split(inn, out):
                 if fout.tell() >= max_size:
                     endfile(fout)
                     print(f' {fid:04d}', end='\r')
-                    fout = newfile()
+                    fout = newfile(out)
             if record:
                 fout.write(line)
     endfile(fout)
 
-def newfile():
+def newfile(out):
     global fid
     fid += 1
     fpath = os.path.join(out, f'page{fid:04d}.xml')
