@@ -1,12 +1,16 @@
 import os
+import argparse
 from penut.utils import TimeCost
 
 fid = 0
 
 def main():
-    inn = './data/dump/zhwiki-latest-pages-articles.xml'
-    out = './data/pages'
-    split(inn, out)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input', required=True)
+    parser.add_argument('-o', '--output', required=True)
+    args = parser.parse_args()
+
+    split(args.inn, args.out)
 
 def split(inn, out):
     record = False

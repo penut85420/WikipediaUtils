@@ -1,15 +1,20 @@
 import os
+import argparse
 import penut.io as pio
 import xml.etree.cElementTree as ET
 
 from wiki import remove_wikitext
 
 def main():
-    inn_dir = './data/pages'
-    out1 = './data/wiki_pages_plain.json'
-    out2 = './data/wiki_pages_plain_pretty.json'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input-dir', required=True)
+    parser.add_argument('-o', '--output', required=True)
+    args = parser.parse_args()
 
-    xml_to_json(inn_dir, out1, out2)
+    fn, ext = os.path.splitext(args.output)
+    out_pretty = f'{fn}_pretty{ext}'
+
+    xml_to_json(args.input_dir, args.output, out_pretty)
 
 def xml_to_json(inn_dir, out1, out2):
     pageset = []
