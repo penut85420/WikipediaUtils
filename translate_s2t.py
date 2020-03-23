@@ -18,13 +18,14 @@ def translate(inn, out):
     total = len(data)
 
     for i, page in enumerate(data):
-        print(end=f'{i}/{total}\r')
+        print(end=f'{i/total*100:6.2f}% {i}/{total}\r')
         for key in page:
             if page[key] != None:
                 page[key] = zm.s2t(page[key])
 
-    pio.dump(out)
+    pio.dump(data, out)
 
 if __name__ == "__main__":
     with TimeCost('Translate into Traditional Chinese'):
         main()
+
